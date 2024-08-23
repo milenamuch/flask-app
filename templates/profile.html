@@ -1,12 +1,17 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container text-center">
     <img
       src="{{profile.image}}"
       alt="{{profile.name}}"
-      class="img-fluid img-thumbnail"
+      class="img-fluid rounded"
+      style="width: 37rem; margin: 2rem;"
     />
     <h3 class="h3">{{profile.name}}</h3>
-  </div>
+    <p class="lead">Espécie: {{profile.species}}</p>
+    <p class="lead">Gênero: {{profile.gender}}</p>
+    <p class="lead">Status: {{profile.status}}</p>
+    <p class="lead">Localização: {{profile.location.name}}</p>
+</div>
 {% endblock content %}
