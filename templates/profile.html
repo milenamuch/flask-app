@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <img
+      src="{{profile.image}}"
+      alt="{{profile.name}}"
+      class="img-fluid img-thumbnail"
+    />
+    <h3 class="h3">{{profile.name}}</h3>
+  </div>
+{% endblock content %}
