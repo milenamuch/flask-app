@@ -1,0 +1,17 @@
+{% extends "layout.html" %} {% block content %}
+<div class=" row">
+    {% for episode in episodes %}
+    <div class="col-sm-3 col-6 text-center">
+        <div class="card" style="width: 18rem; margin: 2rem;">
+            <div class="card-header" style="background-color:#85CB82;">
+              {{episode.name}}
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{episode.air_date}}</li>
+              <li class="list-group-item">{{episode.episode}}</li>
+            </ul>
+        </div>
+    </div>  
+    {% endfor %}
+</div>
+{% endblock content %}

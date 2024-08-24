@@ -64,9 +64,33 @@ def get_list_characters():
         
     return {"characters": characters}
     
+@app.route("/episodes")  #listagem dos episódios
+def get_list_episodes():
+    
+    #variável url que vai receber a url da api que eu quero consumir
+    url = "https://rickandmortyapi.com/api/episode" 
+    
+    #response para usar a classe da lib request para abrir a url definida acima
+    response = urllib.request.urlopen(url) 
+    
+    #criar uma variável para fazer a leitura do resultado
+    episodes = response.read()
+    
+    #criar uma variável que vai formatar para um formato json
+    dict = json.loads(episodes)
+    
+    episodes = []
+    
+    for episode in dict["results"]:
+        episode = {
+            "name": episode["name"],
+            "air_date": episode["air_date"],
+            "episode" : episode["episode"]
+        }
 
-
-
+        episodes.append(episode)
+        
+    return render_template("episodes.html", episodes=dict["results"])
 
 
 
