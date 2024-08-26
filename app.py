@@ -92,6 +92,19 @@ def get_list_episodes():
         
     return render_template("episodes.html", episodes=dict["results"])
 
+@app.route("/episode/<id>")  #rota para episódio específico
+def get_episode(id):
+    
+    #variável url que vai receber a url da api que eu quero consumir
+    url = "https://rickandmortyapi.com/api/episode/" + id
+    
+    #response para usar a classe da lib request para abrir a url definida acima
+    response = urllib.request.urlopen(url) 
+    
+    data = response.read()
+    
+    dict = json.loads(data)
 
+    return render_template("episode.html", episode=dict)
 
 #Comando para levantar o servidor local:  flask --app app run
