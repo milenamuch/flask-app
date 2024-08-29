@@ -24,31 +24,31 @@
 <div class="container text-center margin-top-bottom-10">
   <div class="row">
     <div class="column-custom">
-      <h1>Episódio</h1>
+      <h1>Localização</h1>
     </div>
-    <div class="col-md-12 column-custom">
-      <h2 class="title">{{episode.name}}</h2>
+    <div class="col-md-4 column-custom">
+      <h2 class="title">{{location.name}}</h2>
     </div>
-    <div class="col-md-12 column-custom">
-      <h2 class="title">Data de Lançamento: {{episode.air_date}}</h2>
+    <div class="col-md-4 column-custom">
+      <h2 class="title">{{location.type}}</h2>
     </div>
-    <div class="col-md-12 column-custom">
-      <h2 class="title">Episódio da temporada: {{episode.episode}}</h2>
+    <div class="col-md-4 column-custom">
+      <h2 class="title">{{location.dimension}}</h2>
     </div>
   </div>
   <div class="row column-custom">
-    <h1>Personagens neste episódio</h1>
-    {% for character in characters %}
+    <h1>Residentes</h1>
+    {% for resident in residents %}
         {% if loop.index0 % 4 == 0 %}
             </div>
             <div class="row column-custom">
         {% endif %}
         <div class="col-md-3 text-center">
             <div class="card" style="width: 18rem;">
-                <img src="{{ character.image }}" class="card-img-top" alt="{{ character.name }}" />
+                <img src="{{ resident.image }}" class="card-img-top" alt="{{ resident.name }}" />
                 <div class="card-body">
-                    <h5 class="card-title">{{ character.name }}</h5>
-                    <a href="/profile/{{ character.id }}" class="btn btn-info">Ver perfil</a>
+                    <h5 class="card-title">{{ resident.name }}</h5>
+                    <a href="/profile/{{ resident.id }}" class="btn btn-info">Ver perfil</a>
                 </div>
             </div>
         </div>

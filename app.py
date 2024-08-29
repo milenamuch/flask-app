@@ -34,13 +34,17 @@ def get_profile(id):
     
     dict = json.loads(data)
 
-    return render_template("profile.html", profile=dict)
+    return render_template("profile.html", profile = dict)
 
 #criar uma rota com a utliização do decorador route, quais urls serão acionadas, que estão disponíveis dentro da aplicação
 @app.route("/lista") #rota principal/ página inicial
 def get_list_characters():
     
-    #variável url que vai receber a url da api que eu quero consumir
+    return get_characters()
+
+
+def get_characters():
+        #variável url que vai receber a url da api que eu quero consumir
     url = "https://rickandmortyapi.com/api/character" 
     
     #response para usar a classe da lib request para abrir a url definida acima
@@ -63,7 +67,26 @@ def get_list_characters():
         characters.append(character)
         
     return {"characters": characters}
+
+def get_character_urls(character_urls):
+    characters = []
     
+    for url in character_urls:
+        response = urllib.request.urlopen(url)
+        character_data = response.read()
+        character_dict = json.loads(character_data)
+        
+        character = {
+            "name": character_dict["name"],
+            "image": character_dict["image"],
+            "id": character_dict["id"]
+        }
+        
+        characters.append(character)
+    
+    return characters
+
+
 @app.route("/episodes")  #listagem dos episódios
 def get_list_episodes():
     
@@ -85,7 +108,8 @@ def get_list_episodes():
         episode = {
             "name": episode["name"],
             "air_date": episode["air_date"],
-            "episode" : episode["episode"]
+            "episode" : episode["episode"],
+            "url": episode["url"]
         }
 
         episodes.append(episode)
@@ -104,7 +128,56 @@ def get_episode(id):
     data = response.read()
     
     dict = json.loads(data)
+    
+    characters = get_character_urls(dict["characters"])
 
-    return render_template("episode.html", episode=dict)
+    return render_template("episode.html", episode=dict, characters = characters)
+
+@app.route("/locations")  #listagem dos episódios
+def get_list_locations():
+    
+    #variável url que vai receber a url da api que eu quero consumir
+    url = "https://rickandmortyapi.com/api/location" 
+    
+    #response para usar a classe da lib request para abrir a url definida acima
+    response = urllib.request.urlopen(url) 
+    
+    #criar uma variável para fazer a leitura do resultado
+    locations = response.read()
+    
+    #criar uma variável que vai formatar para um formato json
+    dict = json.loads(locations)
+    
+    locations = []
+    
+    for location in dict["results"]:
+        location = {
+            "name": location["name"],
+            "type": location["type"],
+            "dimension" : location["dimension"]
+        }
+
+        locations.append(location)
+        
+    return render_template("locations.html", locations=dict["results"])
+    
+    
+
+@app.route("/location/<id>")  #rota para uma localização específica
+def get_location(id):
+    
+    #variável url que vai receber a url da api que eu quero consumir
+    url = "https://rickandmortyapi.com/api/location/" + id
+    
+    #response para usar a classe da lib request para abrir a url definida acima
+    response = urllib.request.urlopen(url) 
+    
+    data = response.read()
+    
+    dict = json.loads(data)
+    
+    residents = get_character_urls(dict["residents"])
+        
+    return render_template("location.html", location=dict, residents=residents)
 
 #Comando para levantar o servidor local:  flask --app app run

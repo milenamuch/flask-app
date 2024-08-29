@@ -23,29 +23,29 @@
 <div class="container text-center margin-top-bottom-10">
   <div class="row">
     <div class="column-custom">
-      <h1>Episódios</h1>
+      <h1>Localizações</h1>
     </div>
     <div class="col-md-3 column-custom">
       <h2 class="title">Nome</h2>
     </div>
     <div class="col-md-3 column-custom">
-      <h2 class="title">Data de Lançamento</h2>
+      <h2 class="title">Tipo</h2>
     </div>
     <div class="col-md-3 column-custom">
-      <h2 class="title">Temporada</h2>
+      <h2 class="title">Dimensão</h2>
     </div>
     <div class="col-md-3 column-custom">
       <h2 class="title">Detalhes</h2>
     </div>
   </div>
 
-  {% for episode in episodes %}
+  {% for location in locations %}
   <div class="row">
-    <div class="col-md-3 column-custom">{{episode.name}}</div>
-    <div class="col-md-3 column-custom">{{episode.air_date}}</div>
-    <div class="col-md-3 column-custom">{{episode.episode}}</div>
+    <div class="col-md-3 column-custom">{{location.name}}</div>
+    <div class="col-md-3 column-custom">{{location.type}}</div>
+    <div class="col-md-3 column-custom">{{location.dimension}}</div>
     <div class="col-md-3 column-custom">
-      <a href="/episode/{{episode.id}}">Ver detalhes do episódio</a>
+      <a href="/location/{{location.id}}">Ver localização</a>
     </div>
   </div>
   {% endfor %}

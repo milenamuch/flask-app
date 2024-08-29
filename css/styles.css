@@ -1,0 +1,26 @@
+body {
+    background-image: url("https://styledme.com/wp-content/uploads/2020/09/rick-and-morty-zoom-virtual-backgrounds-free-download-background-images.jpg");
+    background-size: auto;
+    background-repeat: repeat;
+    background-position: top-left;
+  }
+
+/* styles.css */
+.column-custom {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .width-100{
+    width: 100%;
+  }
+  
