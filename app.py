@@ -5,44 +5,26 @@ import urllib.request, json
 #carregar a instância do Flask
 app = Flask(__name__)
 
-@app.route("/")  #rota principal/ página inicial
-def get_list_character_page():
+""" - - - FUNÇÕES - - - """
+"""Função para pegar os episódios de um personagem"""
+def get_character_episodes(episode_urls):
+    episodes = []
     
-    #variável url que vai receber a url da api que eu quero consumir
-    url = "https://rickandmortyapi.com/api/character" 
+    for url in episode_urls:
+        response = urllib.request.urlopen(url)
+        episode_data = response.read()
+        episode_dict = json.loads(episode_data)
+        
+        episode = {
+            "name": episode_dict["name"],
+            "id": episode_dict["id"]
+        }
+        
+        episodes.append(episode)
     
-    #response para usar a classe da lib request para abrir a url definida acima
-    response = urllib.request.urlopen(url) 
-    
-    data = response.read()
-    
-    dict = json.loads(data)
+    return episodes
 
-    return render_template("characters.html", characters=dict["results"])
-
-
-@app.route("/profile/<id>")  #rota para personagem específico
-def get_profile(id):
-    
-    #variável url que vai receber a url da api que eu quero consumir
-    url = "https://rickandmortyapi.com/api/character/" + id
-    
-    #response para usar a classe da lib request para abrir a url definida acima
-    response = urllib.request.urlopen(url) 
-    
-    data = response.read()
-    
-    dict = json.loads(data)
-
-    return render_template("profile.html", profile = dict)
-
-#criar uma rota com a utliização do decorador route, quais urls serão acionadas, que estão disponíveis dentro da aplicação
-@app.route("/lista") #rota principal/ página inicial
-def get_list_characters():
-    
-    return get_characters()
-
-
+"""Função para pegar os personagens"""
 def get_characters():
         #variável url que vai receber a url da api que eu quero consumir
     url = "https://rickandmortyapi.com/api/character" 
@@ -61,13 +43,17 @@ def get_characters():
     for character in dict["results"]:
         character = {
             "name": character["name"],
-            "status": character["status"]
+            "status": character["status"],
+            "episodes" : character["episodes"],
+            "origin": character["origin"],
+            "location": character["location"]
         }
 
         characters.append(character)
         
     return {"characters": characters}
 
+"""Função para pegar os dados da url do personagem através da url do episódio"""
 def get_character_urls(character_urls):
     characters = []
     
@@ -86,7 +72,50 @@ def get_character_urls(character_urls):
     
     return characters
 
+""" - - - ROTAS - - - """
 
+"""Página inicial"""
+@app.route("/")  #rota principal/ página inicial
+def get_list_character_page():
+    
+    #variável url que vai receber a url da api que eu quero consumir
+    url = "https://rickandmortyapi.com/api/character" 
+    
+    #response para usar a classe da lib request para abrir a url definida acima
+    response = urllib.request.urlopen(url) 
+    
+    data = response.read()
+    
+    dict = json.loads(data)
+
+    return render_template("characters.html", characters=dict["results"])
+
+"""Personagem específico"""
+@app.route("/profile/<id>")  #rota para personagem específico
+def get_profile(id):
+    
+    #variável url que vai receber a url da api que eu quero consumir
+    url = "https://rickandmortyapi.com/api/character/" + id
+    
+    #response para usar a classe da lib request para abrir a url definida acima
+    response = urllib.request.urlopen(url) 
+    
+    data = response.read()
+    
+    dict = json.loads(data)
+    
+    episodes = get_character_episodes(dict["episode"])
+
+    return render_template("profile.html", profile = dict, episodes = episodes)
+
+"""Listagem de personagens em Json"""
+@app.route("/lista")
+def get_list_characters():
+    return get_characters()
+
+
+
+"""Listagem de episódios"""
 @app.route("/episodes")  #listagem dos episódios
 def get_list_episodes():
     
@@ -116,6 +145,7 @@ def get_list_episodes():
         
     return render_template("episodes.html", episodes=dict["results"])
 
+"""Episódio específico"""
 @app.route("/episode/<id>")  #rota para episódio específico
 def get_episode(id):
     
@@ -133,6 +163,7 @@ def get_episode(id):
 
     return render_template("episode.html", episode=dict, characters = characters)
 
+"""Listagem de localizações"""
 @app.route("/locations")  #listagem dos episódios
 def get_list_locations():
     
@@ -161,8 +192,7 @@ def get_list_locations():
         
     return render_template("locations.html", locations=dict["results"])
     
-    
-
+"""Localização específica"""
 @app.route("/location/<id>")  #rota para uma localização específica
 def get_location(id):
     
