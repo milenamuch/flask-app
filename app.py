@@ -1,10 +1,13 @@
 from flask import Flask, render_template
+import os
 #bibliotecas: urllib - para manipular as requisições e json - para tratar na tela o resultado que eu vou receber na requisição
 import urllib.request, json
 
 #carregar a instância do Flask
 app = Flask(__name__)
-
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 4000))  
+    app.run(host="0.0.0.0", port=port)
 """ - - - FUNÇÕES - - - """
 """Função para pegar os episódios de um personagem"""
 def get_character_episodes(episode_urls):
