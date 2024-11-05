@@ -6,7 +6,7 @@ import urllib.request, json
 #carregar a instância do Flask
 app = Flask(__name__)
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 4000))  
+    port = int(os.environ.get("PORT", 10000))  
     app.run(host="0.0.0.0", port=port)
 """ - - - FUNÇÕES - - - """
 """Função para pegar os episódios de um personagem"""
