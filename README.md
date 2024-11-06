@@ -6,7 +6,7 @@ Está hospedado no Render, e você poderá visitá-lo clicando [aqui](https://fl
 ## 📑 Documentação
 [Rick and Morty API Documentation](https://rickandmortyapi.com/documentation)
 
-### Pre sets
+### Configurações
 
 - Instalar dependências: <br>
 `pip install requirements.txt`
